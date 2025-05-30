@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :password, format: { with: VALID_PASSWORD_REGEX, message: 'は半角英数字混合で入力してください' }, if: :password_required?
 
   validates :nickname, presence: true
-  validates :email, presence: true, uniqueness: true
+
   # メール形式（@含む）・パスワード文字数・確認一致は Devise により自動適用されます
 
   validates :last_name, presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'は全角で入力してください' }
@@ -16,12 +16,12 @@ class User < ApplicationRecord
 
   validates :last_name_kana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: 'は全角カタカナで入力してください' }
   validates :first_name_kana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: 'は全角カタカナで入力してください' }
-  
+
   validates :birth_date, presence: true
 
   # アソシエーション
-  has_many :items
-  has_many :orders
+  # has_many :items
+  # has_many :orders
 
   private
 
