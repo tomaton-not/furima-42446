@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
   belongs_to :user
-  has_one :order
+  # has_one :order 商品購入機能の実装時に反映させる
   has_one_attached :image
 
   extend ActiveHash::Associations::ActiveRecordExtensions

@@ -1,6 +1,7 @@
 // app/javascript/item_price.js
-window.addEventListener('turbo:load', () => {
+const price = () => {
   const priceInput = document.getElementById("item-price");
+
   priceInput.addEventListener("input", () => {
     const value = priceInput.value;
     const tax = Math.floor(value * 0.1);
@@ -8,4 +9,7 @@ window.addEventListener('turbo:load', () => {
     document.getElementById("add-tax-price").innerHTML = tax;
     document.getElementById("profit").innerHTML = profit;
   });
-});
+};
+
+window.addEventListener("turbo:load", price);
+window.addEventListener("turbo:render", price);
