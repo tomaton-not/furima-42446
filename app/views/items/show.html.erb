@@ -30,9 +30,7 @@
         <%= @item.shipping_cost.name %>
       </span>
     </div>
-
-    <%# ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう %>
-
+    
     <% if user_signed_in? %>
       <% if current_user == @item.user %>
         <%# 出品者（ログイン中）には編集と削除 %>
@@ -45,10 +43,8 @@
       <% end %>
     <% end %>
 
-    <%# //ログインしているユーザーと出品しているユーザーが、同一人物の場合と同一人物ではない場合で、処理を分けましょう %>
-
     <div class="item-explain-box">
-      <span><%= "商品説明" %></span>
+      <span><%= @item.description %></span>
     </div>
     <table class="detail-table">
       <tbody>
