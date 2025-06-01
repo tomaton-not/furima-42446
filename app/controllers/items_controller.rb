@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    #@items = Item.all 商品一覧機能の実装時に反映する
+    @items = Item.all
   end
 
   def new
@@ -17,6 +17,7 @@ class ItemsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
 
   private
 
