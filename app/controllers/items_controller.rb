@@ -1,10 +1,9 @@
 class ItemsController < ApplicationController
-  # ログインしている人だけがアクセスできる
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  # 対象の商品を探して @item に入れる
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  # 出品者でなければトップに飛ばす
   before_action :move_to_root_path, only: [:edit, :update, :destroy]
+  before_action :redirect_if_sold_out, only: [:edit, :update]
+
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -55,7 +54,13 @@ class ItemsController < ApplicationController
   end
 
   def move_to_root_path
-    # ログイン中でも出品者以外は弾く
     redirect_to root_path if current_user != @item.user
   end
+
+  def redirect_if_sold_out
+    if @item.order.present?
+      redirect_to root_path
+    end
+  end
+
 end

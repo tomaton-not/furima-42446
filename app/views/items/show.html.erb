@@ -15,13 +15,11 @@
       <% end %>
 
 
-      <%# 商品が売れている場合は、sold outを表示しましょう >
-      <%#
-      <div class="sold-out">
-        <span>Sold Out!!</span>
-      </div>
-      %>
-      <%#//商品が売れている場合は、sold outを表示しましょう %>
+      <% if @item.order.present? %> 
+          <div class='sold-out'>
+            <span>Sold Out!!</span>
+          </div>
+      <% end %>
       
     </div>
     <div class="item-price-box">
@@ -34,14 +32,19 @@
     </div>
     
     <% if user_signed_in? %>
-      <% if current_user == @item.user %>
-        <%# 出品者（ログイン中）には編集と削除 %>
+      <% if @item.order.present? %>
+        <%# 売却済み商品は「Sold Out」のみ表示 %>
+        <p class="sold-out-label">Sold Out</p>
+
+      <% elsif current_user == @item.user %>
+        <%# 出品者かつ未購入の商品 → 編集・削除可能 %>
         <%= link_to "商品の編集", edit_item_path(@item), class: "item-red-btn" %>
         <p class="or-text">or</p>
-        <%= link_to "削除", item_path(@item), data: {turbo_method: :delete }, class: "item-destroy" %>
+        <%= link_to "削除", item_path(@item), data: {turbo_method: :delete}, class: "item-destroy" %>
+
       <% else %>
-        <%# ログイン済・他人が閲覧している場合は購入ボタン ※購入機能でも恐らく調整必要な箇所%>
-        <%= link_to "購入画面に進む", "#", class: "item-red-btn" %>
+        <%# 他人が閲覧・未購入 → 購入ボタン表示 %>
+        <%= link_to "購入画面に進む", item_orders_path(@item), data: { turbo: false }, class: "item-red-btn" %>
       <% end %>
     <% end %>
 

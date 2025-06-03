@@ -2,6 +2,8 @@
 const price = () => {
   const priceInput = document.getElementById("item-price");
 
+  if (!priceInput) return;
+
   priceInput.addEventListener("input", () => {
     const value = priceInput.value;
     const tax = Math.floor(value * 0.1);

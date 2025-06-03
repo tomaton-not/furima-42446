@@ -20,8 +20,8 @@ class User < ApplicationRecord
   validates :birth_date, presence: true
 
   # アソシエーション
-  # has_many :items
-  # has_many :orders
+  has_many :items
+  has_many :orders
 
   private
 
