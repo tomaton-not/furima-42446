@@ -5,12 +5,11 @@ class OrdersController < ApplicationController
   before_action :redirect_if_invalid_access
 
   def index
+    gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
     @order_address = OrderAddress.new
   end
 
   def create
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
-
     @order_address = OrderAddress.new(order_params)
     if @order_address.valid?
       @order_address.save
@@ -26,7 +25,7 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order_address).permit(:post_code, :shipped_from_id, :city, :house_number, :building_name, :telephone_number)
-          .merge(user_id: current_user.id, item_id: @item.id, token: "dummy_token") # PAY.JP導入前のためダミー表記、実装時には params[:token] を受け取るように変更
+          .merge(user_id: current_user.id, item_id: @item.id, token: params[:token]) 
   end
 
   def set_item

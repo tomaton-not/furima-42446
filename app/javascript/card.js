@@ -2,7 +2,7 @@ const pay = () => {
   const form = document.getElementById("charge-form");
   if (!form) return;
 
-  const payjp = Payjp("pk_test_5788e41268bbd5d9e721ca5a"); 
+  const payjp = Payjp(gon.public_key); 
   const elements = payjp.elements();
 
   const numberElement = elements.create("cardNumber");
@@ -16,7 +16,6 @@ const pay = () => {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    console.log("フォーム送信イベント発火！");
 
     payjp.createToken(numberElement).then(function (response) {
       if (response.error) {
@@ -35,3 +34,4 @@ const pay = () => {
 };
 
 window.addEventListener("turbo:load", pay);
+window.addEventListener("turbo:render", pay);

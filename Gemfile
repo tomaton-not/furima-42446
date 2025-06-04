@@ -94,3 +94,5 @@ gem 'dotenv-rails'
 
 gem 'payjp'
 
+gem 'gon'
+

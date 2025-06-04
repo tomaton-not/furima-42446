@@ -1,3 +1,4 @@
+<%= include_gon %>
 <%= render "shared/second-header"%>
 
 <div class='transaction-contents'>
@@ -14,8 +15,8 @@
           <%= @item.item_name %>
         </h2>
         <div class='buy-item-price'>
-          <p class='item-price-text'>¥<%= '999,999,999' %></p>
-          <p class='item-price-sub-text'><%= '配送料負担' %></p>
+          <p class='item-price-text'>¥<%= @item.price %></p>
+          <p class='item-price-sub-text'><%= @item.shipping_cost.name %></p>
         </div>
       </div>
     </div>
@@ -36,14 +37,7 @@
     <%= form_with model: @order_address, url: item_orders_path(@item), id: 'charge-form', class: 'transaction-form-wrap', local: true do |f| %>
 
       <% if @order_address.errors.any? %>
-        <div class="error-messages">
-          <h2>入力内容に誤りがあります</h2>
-          <ul>
-            <% @order_address.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
+        <%= render "shared/error_messages", model: @order_address %>
       <% end %>
 
       <%# カード情報の入力 %>
