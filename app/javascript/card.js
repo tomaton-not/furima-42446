@@ -19,17 +19,18 @@ const pay = () => {
 
     payjp.createToken(numberElement).then(function (response) {
       if (response.error) {
-        alert("カード情報が正しくありません");
       } else {
         const token = response.id;
+        const renderDom = document.getElementById("charge-form");
         const tokenObj = `<input value=${token} name='token' type="hidden">`;
-        form.insertAdjacentHTML("beforeend", tokenObj);
-        document.getElementById("number-form").remove();
-        document.getElementById("expiry-form").remove();
-        document.getElementById("cvc-form").remove();
-        form.submit();
+        renderDom.insertAdjacentHTML("beforeend", tokenObj);
       }
+      numberElement.clear();
+      expiryElement.clear();
+      cvcElement.clear();
+      document.getElementById("charge-form").submit();
     });
+    e.preventDefault();
   });
 };
 
