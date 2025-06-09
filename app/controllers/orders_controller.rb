@@ -18,8 +18,6 @@ class OrdersController < ApplicationController
     else
       render :index, status: :unprocessable_entity
     end
-
-    puts order_params.inspect
   end
 
   private
